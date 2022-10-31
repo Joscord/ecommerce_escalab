@@ -104,6 +104,9 @@ const fetchNotebooks = async () => {
 	return notebooks;
 };
 
+// add item to cart
+const addToCart = id => console.log(`${id}`);
+
 // randomize items inside an array
 const randomizeItems = array => {
 	let currentIndex = array.length,
@@ -123,7 +126,7 @@ const randomizeItems = array => {
 
 // create product card
 const createProductCard = product => {
-	const { title, price, thumbnail } = product;
+	const { title, price, thumbnail, id } = product;
 	const card = document.createElement('div');
 	card.className = 'card';
 	card.style.width = '18rem';
@@ -135,7 +138,7 @@ const createProductCard = product => {
     </div>
     <div class="card-body">
         <a href="#" class="card-link">${price}</a>
-        <button class="card-link">Add to Cart</button>
+        <button id="button-${id}" class="card-link"> Add to Cart</button>
     </div>
     `;
 	return card;
@@ -147,9 +150,11 @@ const showProducts = async () => {
 	const products = await fetchNotebooks();
 	toRandomizeProducts = [...products, ...dummyProducts];
 	const toDisplayProducts = randomizeItems(toRandomizeProducts);
-	toDisplayProducts.map(product =>
-		contentDiv.appendChild(createProductCard(product))
-	);
+	toDisplayProducts.map(product => {
+		contentDiv.appendChild(createProductCard(product));
+		const productButton = document.getElementById(`button-${product.id}`);
+		productButton.addEventListener('click', () => addToCart(product.id));
+	});
 };
 
 window.addEventListener('load', showProducts);
