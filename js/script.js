@@ -95,6 +95,9 @@ const dummyProducts = [
 // contentDiv
 const contentDiv = document.getElementById('content');
 
+// cart state
+const cartState = [];
+
 // fetch notebooks from mercadolibre
 const fetchNotebooks = async () => {
 	const response = await axios.get(
@@ -144,7 +147,7 @@ const createProductCard = product => {
 	return card;
 };
 
-// show produccts
+// show products
 const showProducts = async () => {
 	contentDiv.innerHTML = '';
 	const products = await fetchNotebooks();
