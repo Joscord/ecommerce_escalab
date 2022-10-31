@@ -92,6 +92,9 @@ const dummyProducts = [
 	},
 ];
 
+// contentDiv
+const contentDiv = document.getElementById('content');
+
 // fetch notebooks from mercadolibre
 const fetchNotebooks = async () => {
 	const response = await axios.get(
@@ -99,6 +102,23 @@ const fetchNotebooks = async () => {
 	);
 	const { results: notebooks } = response.data;
 	return notebooks;
+};
+
+// randomize items inside an array
+const randomizeItems = array => {
+	let currentIndex = array.length,
+		randomIndex;
+
+	while (currentIndex != 0) {
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex--;
+		[array[currentIndex], array[randomIndex]] = [
+			array[randomIndex],
+			array[currentIndex],
+		];
+	}
+
+	return array;
 };
 
 // create product card
@@ -115,8 +135,21 @@ const createProductCard = product => {
     </div>
     <div class="card-body">
         <a href="#" class="card-link">${price}</a>
-        <a href="#" class="card-link">Buy Now</a>
+        <button class="card-link">Add to Cart</button>
     </div>
     `;
 	return card;
 };
+
+// show produccts
+const showProducts = async () => {
+	contentDiv.innerHTML = '';
+	const products = await fetchNotebooks();
+	toRandomizeProducts = [...products, ...dummyProducts];
+	const toDisplayProducts = randomizeItems(toRandomizeProducts);
+	toDisplayProducts.map(product =>
+		contentDiv.appendChild(createProductCard(product))
+	);
+};
+
+window.addEventListener('load', showProducts);
