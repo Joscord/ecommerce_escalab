@@ -91,3 +91,12 @@ const dummyProducts = [
 			'https://falabella.scene7.com/is/image/Falabella/14399853_1?wid=1500&hei=1500&qlt=70',
 	},
 ];
+
+// fetch notebooks from mercadolibre
+const fetchNotebooks = async () => {
+	const response = await axios.get(
+		'https://api.mercadolibre.com/sites/MLC/search?q=notebook'
+	);
+	const { results: notebooks } = response.data;
+	return notebooks;
+};
