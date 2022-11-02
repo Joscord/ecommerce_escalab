@@ -131,6 +131,7 @@ const getState = () => {
 const fillModal = () => {
 	const cartItems = getState();
 	const modalBody = document.getElementById('modal-body');
+	modalBody.innerHTML = '';
 	cartItems.map(item => {
 		const itemP = document.createElement('p');
 		itemP.innerHTML = item.title;
@@ -195,3 +196,4 @@ const showProducts = async () => {
 window.addEventListener('load', showProducts);
 
 // add eventListener to cart button
+cartButton.addEventListener('click', fillModal);
