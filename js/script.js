@@ -95,10 +95,13 @@ const dummyProducts = [
 // contentDiv
 const contentDiv = document.getElementById('content');
 
+// cart button
+const cartButton = document.getElementById('cart-btn');
+
 // cart state
 const cartState = [];
 
-// add to product to cartState
+// add product to cartState
 const setCartState = id => {
 	const productId = id;
 	const notebookProduct = notebooks.find(notebook => notebook.id === productId);
@@ -180,3 +183,5 @@ const showProducts = async () => {
 
 // add eventlistener to window
 window.addEventListener('load', showProducts);
+
+// add eventListener to cart button
