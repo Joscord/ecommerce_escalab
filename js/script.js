@@ -97,11 +97,10 @@ const contentDiv = document.getElementById('content');
 
 // cart button
 const cartButton = document.getElementById('cart-btn');
-
 // cart state
 const cartState = [];
 
-// add product to cartState
+// add to product to cartState
 const setCartState = id => {
 	const productId = id;
 	const notebookProduct = notebooks.find(notebook => notebook.id === productId);
@@ -126,6 +125,17 @@ const fetchNotebooks = async () => {
 const getState = () => {
 	const copyState = [...cartState];
 	return copyState;
+};
+
+// render items inside modal
+const fillModal = () => {
+	const cartItems = getState();
+	const modalBody = document.getElementById('modal-body');
+	cartItems.map(item => {
+		const itemP = document.createElement('p');
+		itemP.innerHTML = item.title;
+		modalBody.appendChild(itemP);
+	});
 };
 
 // notebooks
@@ -183,3 +193,5 @@ const showProducts = async () => {
 
 // add eventlistener to window
 window.addEventListener('load', showProducts);
+
+// add eventListener to cart button
