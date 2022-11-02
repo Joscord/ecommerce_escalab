@@ -107,8 +107,18 @@ const fetchNotebooks = async () => {
 	return notebooks;
 };
 
+// notebooks
+let notebooks;
+
 // add item to cart
-const addToCart = id => console.log(`${id}`);
+const addToCart = id => {
+	const productId = id;
+	if (notebooks.find(notebook => notebook.id === productId)) {
+		cartState.push(notebooks.find(notebook => notebook.id === productId));
+	} else {
+		cartState.push(dummyProducts.find(product => product.id === productId));
+	}
+};
 
 // randomize items inside an array
 const randomizeItems = array => {
@@ -150,8 +160,8 @@ const createProductCard = product => {
 // show products
 const showProducts = async () => {
 	contentDiv.innerHTML = '';
-	const products = await fetchNotebooks();
-	toRandomizeProducts = [...products, ...dummyProducts];
+	notebooks = await fetchNotebooks();
+	toRandomizeProducts = [...notebooks, ...dummyProducts];
 	const toDisplayProducts = randomizeItems(toRandomizeProducts);
 	toDisplayProducts.map(product => {
 		contentDiv.appendChild(createProductCard(product));
