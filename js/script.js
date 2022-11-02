@@ -119,6 +119,12 @@ const fetchNotebooks = async () => {
 	return notebooks;
 };
 
+// get a copy of state
+const getState = () => {
+	const copyState = [...cartState];
+	return copyState;
+};
+
 // notebooks
 let notebooks;
 
