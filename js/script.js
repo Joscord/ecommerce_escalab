@@ -183,5 +183,3 @@ const showProducts = async () => {
 
 // add eventlistener to window
 window.addEventListener('load', showProducts);
-
-// add eventListener to cart button
