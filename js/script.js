@@ -98,6 +98,18 @@ const contentDiv = document.getElementById('content');
 // cart state
 const cartState = [];
 
+// add to product to cartState
+const setCartState = id => {
+	const productId = id;
+	const notebookProduct = notebooks.find(notebook => notebook.id === productId);
+	const dummyProduct = dummyProducts.find(product => product.id === productId);
+	if (notebookProduct) {
+		cartState.push(notebookProduct);
+	} else {
+		cartState.push(dummyProduct);
+	}
+};
+
 // fetch notebooks from mercadolibre
 const fetchNotebooks = async () => {
 	const response = await axios.get(
@@ -109,16 +121,6 @@ const fetchNotebooks = async () => {
 
 // notebooks
 let notebooks;
-
-// add item to cart
-const addToCart = id => {
-	const productId = id;
-	if (notebooks.find(notebook => notebook.id === productId)) {
-		cartState.push(notebooks.find(notebook => notebook.id === productId));
-	} else {
-		cartState.push(dummyProducts.find(product => product.id === productId));
-	}
-};
 
 // randomize items inside an array
 const randomizeItems = array => {
@@ -166,8 +168,9 @@ const showProducts = async () => {
 	toDisplayProducts.map(product => {
 		contentDiv.appendChild(createProductCard(product));
 		const productButton = document.getElementById(`button-${product.id}`);
-		productButton.addEventListener('click', () => addToCart(product.id));
+		productButton.addEventListener('click', () => setCartState(product.id));
 	});
 };
 
+// add eventlistener to window
 window.addEventListener('load', showProducts);
