@@ -107,6 +107,14 @@ const modalBody = document.getElementById('modal-body');
 // cart button
 const cartButton = document.getElementById('cart-btn');
 
+// setState
+const setCartState = state => {
+	cartState = state;
+};
+
+// get cart state
+const getCartState = () => [...cartState];
+
 // add to product to cartState
 const addItemToCart = id => {
 	const prevState = getCartState();
@@ -114,11 +122,6 @@ const addItemToCart = id => {
 	const productToAdd = products.find(product => product.id === productId);
 	prevState.push(productToAdd);
 	setCartState(prevState);
-};
-
-// setState
-const setCartState = state => {
-	cartState = state;
 };
 
 // Remove item from cart
@@ -137,9 +140,6 @@ const fetchNotebooks = async () => {
 	const { results: notebooks } = response.data;
 	return notebooks;
 };
-
-// get a copy of cartState
-const getCartState = () => JSON.parse(JSON.stringify(cartState));
 
 // create delete button for cart item
 const createDeleteButton = id => {
