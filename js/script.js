@@ -145,6 +145,7 @@ const fetchNotebooks = async () => {
 const createDeleteButton = id => {
 	const delButton = document.createElement('button');
 	delButton.addEventListener('click', () => removeItemFromCart(id));
+	delButton.className = 'btn btn-warning';
 	delButton.innerHTML = 'Delete Item';
 	return delButton;
 };
@@ -210,7 +211,7 @@ const createProductCard = product => {
     </div>
     <div class="card-body">
         <span href="#" class="card-link">$${price}</span>
-        <button id="button-${id}" class="card-link"> Add to Cart</button>
+        <button id="button-${id}" class="btn btn-success mx-3"> Add to Cart</button>
     </div>
     `;
 	return card;
