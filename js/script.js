@@ -97,19 +97,30 @@ const contentDiv = document.getElementById('content');
 
 // cart button
 const cartButton = document.getElementById('cart-btn');
+
 // cart state
-const cartState = [];
+let cartState = [];
 
 // add to product to cartState
-const setCartState = id => {
+const addItemToCart = id => {
+	const prevState = getState();
 	const productId = id;
-	const notebookProduct = notebooks.find(notebook => notebook.id === productId);
-	const dummyProduct = dummyProducts.find(product => product.id === productId);
-	if (notebookProduct) {
-		cartState.push(notebookProduct);
-	} else {
-		cartState.push(dummyProduct);
-	}
+	const productToAdd = products.find(product => product.id === productId);
+	prevState.push(productToAdd);
+	setState(prevState);
+	console.log(prevState);
+};
+
+// setState
+const setState = state => {
+	cartState = state;
+};
+
+// Remove item from cart
+const removeItemFromCart = id => {
+	const cartState = getState();
+	const newState = cartState.filter(item => item.id !== id);
+	setState(newState);
 };
 
 // fetch notebooks from mercadolibre
@@ -122,10 +133,7 @@ const fetchNotebooks = async () => {
 };
 
 // get a copy of state
-const getState = () => {
-	const copyState = [...cartState];
-	return copyState;
-};
+const getState = () => JSON.parse(JSON.stringify(cartState));
 
 // create delete button for cart item
 const createDeleteButton = id => {
@@ -157,8 +165,8 @@ const fillModal = () => {
 	});
 };
 
-// notebooks
-let notebooks;
+// products
+let products;
 
 // randomize items inside an array
 const randomizeItems = array => {
@@ -201,12 +209,12 @@ const createProductCard = product => {
 const showProducts = async () => {
 	contentDiv.innerHTML = '';
 	notebooks = await fetchNotebooks();
-	toRandomizeProducts = [...notebooks, ...dummyProducts];
-	const toDisplayProducts = randomizeItems(toRandomizeProducts);
+	products = [...notebooks, ...dummyProducts];
+	const toDisplayProducts = randomizeItems(products);
 	toDisplayProducts.map(product => {
 		contentDiv.appendChild(createProductCard(product));
 		const productButton = document.getElementById(`button-${product.id}`);
-		productButton.addEventListener('click', () => setCartState(product.id));
+		productButton.addEventListener('click', () => addItemToCart(product.id));
 	});
 };
 
