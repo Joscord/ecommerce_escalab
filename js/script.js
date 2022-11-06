@@ -127,15 +127,33 @@ const getState = () => {
 	return copyState;
 };
 
+// create delete button for cart item
+const createDeleteButton = id => {
+	const delButton = document.createElement('button');
+	delButton.addEventListener('click', () => removeItemFromCart(id));
+	delButton.innerHTML = 'Delete Item';
+	return delButton;
+};
+
+// create cart item
+const createCartItem = item => {
+	const cartItem = document.createElement('p');
+	cartItem.innerHTML = item.title;
+	return cartItem;
+};
+
 // render items inside modal
 const fillModal = () => {
 	const cartItems = getState();
 	const modalBody = document.getElementById('modal-body');
 	modalBody.innerHTML = '';
 	cartItems.map(item => {
-		const itemP = document.createElement('p');
-		itemP.innerHTML = item.title;
-		modalBody.appendChild(itemP);
+		const itemDiv = document.createElement('div');
+		const cartItem = createCartItem(item);
+		const delButton = createDeleteButton(item.id);
+		itemDiv.appendChild(cartItem);
+		itemDiv.appendChild(delButton);
+		modalBody.appendChild(itemDiv);
 	});
 };
 
