@@ -201,7 +201,7 @@ const randomizeItems = array => {
 const createProductCard = product => {
 	const { title, price, thumbnail, id } = product;
 	const card = document.createElement('div');
-	card.className = 'card';
+	card.className = 'card col-3 m-3';
 	card.style.width = '18rem';
 	card.innerHTML = `
     <img src="${thumbnail}" class="card-img-top" alt="...">
