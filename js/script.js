@@ -171,7 +171,6 @@ const fillModal = items => {
 // render items inside modal
 const renderModal = () => {
 	const cartItems = getCartState();
-	console.log(cartItems);
 	modalBody.innerHTML = '';
 	if (cartItems.length === 0) {
 		modalBody.innerHTML = '<p>You have no items in your cart</p>';
