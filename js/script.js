@@ -209,7 +209,7 @@ const createProductCard = product => {
         <p class="card-text">lorem ipsum</p>
     </div>
     <div class="card-body">
-        <a href="#" class="card-link">${price}</a>
+        <span href="#" class="card-link">$${price}</span>
         <button id="button-${id}" class="card-link"> Add to Cart</button>
     </div>
     `;
