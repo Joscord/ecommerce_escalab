@@ -92,35 +92,41 @@ const dummyProducts = [
 	},
 ];
 
+// cart state
+let cartState = [];
+
+// products
+let products;
+
 // contentDiv
 const contentDiv = document.getElementById('content');
+
+// modal body
+const modalBody = document.getElementById('modal-body');
 
 // cart button
 const cartButton = document.getElementById('cart-btn');
 
-// cart state
-let cartState = [];
-
 // add to product to cartState
 const addItemToCart = id => {
-	const prevState = getState();
+	const prevState = getCartState();
 	const productId = id;
 	const productToAdd = products.find(product => product.id === productId);
 	prevState.push(productToAdd);
-	setState(prevState);
-	console.log(prevState);
+	setCartState(prevState);
 };
 
 // setState
-const setState = state => {
+const setCartState = state => {
 	cartState = state;
 };
 
 // Remove item from cart
 const removeItemFromCart = id => {
-	const cartState = getState();
+	const cartState = getCartState();
 	const newState = cartState.filter(item => item.id !== id);
-	setState(newState);
+	setCartState(newState);
+	renderModal();
 };
 
 // fetch notebooks from mercadolibre
@@ -132,8 +138,8 @@ const fetchNotebooks = async () => {
 	return notebooks;
 };
 
-// get a copy of state
-const getState = () => JSON.parse(JSON.stringify(cartState));
+// get a copy of cartState
+const getCartState = () => JSON.parse(JSON.stringify(cartState));
 
 // create delete button for cart item
 const createDeleteButton = id => {
@@ -150,12 +156,9 @@ const createCartItem = item => {
 	return cartItem;
 };
 
-// render items inside modal
-const fillModal = () => {
-	const cartItems = getState();
-	const modalBody = document.getElementById('modal-body');
-	modalBody.innerHTML = '';
-	cartItems.map(item => {
+// fill modal body with items if cart has any
+const fillModal = items => {
+	items.forEach(item => {
 		const itemDiv = document.createElement('div');
 		const cartItem = createCartItem(item);
 		const delButton = createDeleteButton(item.id);
@@ -165,8 +168,17 @@ const fillModal = () => {
 	});
 };
 
-// products
-let products;
+// render items inside modal
+const renderModal = () => {
+	const cartItems = getCartState();
+	console.log(cartItems);
+	modalBody.innerHTML = '';
+	if (cartItems.length === 0) {
+		modalBody.innerHTML = '<p>You have no items in your cart</p>';
+	} else {
+		fillModal(cartItems);
+	}
+};
 
 // randomize items inside an array
 const randomizeItems = array => {
@@ -222,4 +234,4 @@ const showProducts = async () => {
 window.addEventListener('load', showProducts);
 
 // add eventListener to cart button
-cartButton.addEventListener('click', fillModal);
+cartButton.addEventListener('click', renderModal);
