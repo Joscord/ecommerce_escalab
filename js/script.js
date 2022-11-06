@@ -143,16 +143,16 @@ const fetchNotebooks = async () => {
 
 // create delete button for cart item
 const createDeleteButton = id => {
-	const delButton = document.createElement('button');
+	const delButton = document.createElement('i');
 	delButton.addEventListener('click', () => removeItemFromCart(id));
-	delButton.className = 'btn btn-warning';
-	delButton.innerHTML = 'Delete Item';
+	delButton.className = 'fa-solid fa-x';
 	return delButton;
 };
 
 // create cart item
 const createCartItem = item => {
-	const cartItem = document.createElement('p');
+	const cartItem = document.createElement('span');
+	cartItem.className = 'cart-item';
 	cartItem.innerHTML = item.title;
 	return cartItem;
 };
@@ -163,6 +163,7 @@ const fillModal = items => {
 		const itemDiv = document.createElement('div');
 		const cartItem = createCartItem(item);
 		const delButton = createDeleteButton(item.id);
+		itemDiv.className = 'item-div';
 		itemDiv.appendChild(cartItem);
 		itemDiv.appendChild(delButton);
 		modalBody.appendChild(itemDiv);

@@ -1,0 +1,9 @@
+.item-div {
+    display: flex;
+    justify-content: center;
+    margin: 2em auto;
+}
+
+.cart-item {
+    margin: auto 2em;
+}
